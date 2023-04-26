@@ -1,0 +1,71 @@
+#champion-content{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+#champ-title{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    background-color: whitesmoke;
+}
+
+
+#champ-info{
+    position: relative;
+    padding-inline: 8rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: grey;
+}
+
+#champ-picture{
+    position: relative;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#champ-description{
+    position: relative;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+}
+#champ-description p{
+    font-size: 24px;
+}
+
+#champ-abilities{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+#champ-spells{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+#champ-passive{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+.abilities-pictures{
+    width: 64px;
+    height: 64px;
+}
