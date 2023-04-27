@@ -96,6 +96,7 @@
             v-for="champ in champions"
             :key="champ['id']"
             :class="{'invisible': !champ['name'].toLowerCase().includes(search.value.toLowerCase())}"
+            @click="goToChamp(champ['id'])"
             >
             
                 <div class="champion-name">
