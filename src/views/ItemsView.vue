@@ -1,13 +1,12 @@
 <script setup>
-    import { useItemsStore } from '@/stores/items'
+    // import { useItemsStore } from '@/stores/items'
 
-    const items = useItemsStore()
+    // const items = useItemsStore()
 </script>
 
 <template>
     
 </template>
-
 
 <style>
     

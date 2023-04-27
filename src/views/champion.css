@@ -7,20 +7,24 @@
 }
 #champ-title{
     position: relative;
+    padding-block: 3rem;
     width: 100%;
     text-align: center;
+    font-size: 32px;
     background-color: whitesmoke;
 }
 
 
 #champ-info{
     position: relative;
+    padding-block: 4rem;
     padding-inline: 8rem;
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: grey;
+    background-color: rgb(83, 83, 83);
+    color: white;
 }
 
 #champ-picture{
@@ -41,10 +45,13 @@
     align-content: center;
 }
 #champ-description p{
-    font-size: 24px;
+    font-size: 32px;
 }
 
 #champ-abilities{
+    position: relative;
+    padding-block: 3rem;
+    padding-inline: 10rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -52,20 +59,60 @@
     align-content: center;
 }
 #champ-spells{
+    position: relative;
+    width: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-content: center;
 }
-#champ-passive{
+.champ-spell{
+    position: relative;
+    width: auto;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+}
+.abilities-name{
+    padding-block: 1rem;
+    font-weight: bold;
 }
 .abilities-pictures{
-    width: 64px;
-    height: 64px;
+    width: 96px;
+    height: 96px;
+    border: 4px solid black;
+}
+.abilities-pictures:hover{
+    cursor: pointer;
+}
+
+
+#spells-visualization{
+    position: relative;
+    padding-block: 6rem;
+    padding-inline: 6rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+}
+#spell-picture{
+    position: relative;
+    width: fit-content;
+}
+#spell-picture img{
+    width: 256px;
+    height: 256px;
+    border: 5px solid black;
+}
+#spell-description{
+    position: relative;
+    padding-left: 6rem;
+    width: auto;
+    font-size: 24px;
 }
