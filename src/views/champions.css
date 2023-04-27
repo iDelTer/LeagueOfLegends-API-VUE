@@ -10,19 +10,55 @@
     padding-block: 4rem;
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     background-color: whitesmoke;
 }
-#champion-finder input{
+#finder-input{
+    position: relative;
+    margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+#finder-input input{
     height: 50px;
     width: 500px;
     padding-inline: 1rem;
     text-align: center;
     font-size: 24px;
 }
+#finder-tags{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+#finder-tags .tag-box{
+    position: relative;
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+.tag-box:hover{
+    cursor: pointer;
+}
+.selected-tag{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 
 #champions-content{
     position: relative;
@@ -55,5 +91,8 @@
     position: relative;
 }
 .invisible{
+    display: none;
+}
+.invi{
     display: none;
 }

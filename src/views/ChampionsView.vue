@@ -5,6 +5,15 @@
 
 	const router = useRouter()
 	const champions = ref({})
+    const tags = [
+        'All',
+        'Fighter',
+        'Tank',
+        'Mage',
+        'Assasin',
+        'Marksman',
+        'Support'
+    ]
 
 	const getData = async () => {
 		try {
@@ -21,14 +30,12 @@
     getData()
 
     const search = reactive({
-        isSearching: false,
-        value: ''
+        value: '',
+        tag: 'All'
     })
 
     const updateSearchValue = (event) => {
         search.value = event.target.value
-        search.value.length > 0 ? search.isSearching = true : search.isSearching = false
-        console.log(search.value)
     }
 
     const champ = {
@@ -36,11 +43,21 @@
         name: '',
         image: {
             full: ''
-        }
+        },
+        tags: []
     }
 
     const goToChamp = (name) => {
         router.push(`/champion/${name}`);
+    }
+
+    const changeTag = (tag) => {
+        search.tag = tag
+    }
+
+    const checkTags = (index) => {
+        let check = champions.value[index]['tags'].includes(search.tag) ? true : false
+        return check
     }
 
 </script>
@@ -50,25 +67,59 @@
     <div id="container">
 
         <div id="champion-finder">
-            <input 
-            type="text"
-            v-model="search.value"
-            @input="updateSearchValue"
-            placeholder="Search the champ"
-            >
-        </div>
-        <!-- @change="search.value = $event.target.value" -->
+            <div id="finder-input">
+                <input 
+                type="text"
+                v-model="search.value"
+                @input="updateSearchValue"
+                placeholder="Search the champion"
+                >
+            </div>
+            <div id="finder-tags">
 
-        <div id="champions-content">
+                <div 
+                v-for="tag in tags"
+                :key="tag"
+                class="tag-box"
+                @click="changeTag(tag)"
+                >
+                    <span class="tag-text" :class="{'selected-tag': tag === search.tag}">{{ tag }}</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="champions-content" :class="{'invisible': search.tag === 'All'}">
             
             <div
             class="champion-info"
             v-for="champ in champions"
             :key="champ['id']"
             :class="{'invisible': !champ['name'].toLowerCase().includes(search.value.toLowerCase())}"
+            >
+            
+                <div class="champion-name">
+                    <p>{{ champ.name }}</p>
+                </div>
+
+                <div class="champion-picture">
+                    <img :src="`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/champion/${champ.image.full}`">
+                </div>
+            
+            </div>
+
+        </div>
+
+        <div id="champions-content" :class="{'invisible': search.tag !== 'All'}">
+            
+            <div
+            class="champion-info"
+            v-for="(champ, ind) in champions"
+            :key="champ['id']"
+            :class="{'invisible': !champ['name'].includes(search.value) || !champ['tags'].includes(search.value)}"
             @click="goToChamp(champ['id'])"
             >
-            <!-- v-if="champ['name'].toLowerCase().includes(search.value.toLowerCase())" -->
+                
                 <div class="champion-name">
                     <p>{{ champ.name }}</p>
                 </div>
