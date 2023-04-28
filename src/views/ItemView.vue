@@ -1,14 +1,21 @@
 <script setup>
-	import { ref, reactive } from "vue"
+	import { ref } from "vue"
 	import { useRoute, useRouter } from "vue-router"
 	import axios from "axios"
 
 	const route = useRoute()
 	const router = useRouter()
 
-	const itemId = route.params.id
+	const paramId = route.params.id
+	const itemId = ref('')
 	const items = ref({})
 	const item = ref({})
+
+	const changeItemId = (identifier) => {
+		itemId.value = identifier
+	}
+
+	changeItemId(itemId)
 
 	const getData = async () => {
 		try {
@@ -16,8 +23,7 @@
 				`http://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/item.json`
 			)
 			items.value = data
-			item.value = data["data"][itemId]
-			console.log(data)
+			item.value = data['data'][paramId]
 		} catch (e) {
 			console.log(e)
 			items.value = null
@@ -26,8 +32,14 @@
 	}
 	getData()
 
-	const goToItem = (id) => {
-		router.push(`/item/${id}`)
+	const newItem = (identifier) => {
+		item.value = items.value['data'][`${identifier}`]
+	}
+
+	const goToItem = (identifier) => {
+		router.push({ name: 'Item', params: { id: identifier } })
+		changeItemId(identifier)
+		newItem(identifier)
 	}
 </script>
 
@@ -44,24 +56,27 @@
 				<p>{{ item.name }}</p>
 			</div>
 
-			<div id="item-description">
-				<p>{{ item.plaintext }}</p>
+			<div id="item-description" >
+				<p v-if="item.description">{{ item.plaintext }}</p>
+				<p v-else>No description available</p>
 			</div>
 
 			<div id="item-prices">
 				<p>
-					<span>Buy: </span>{{ item.gold.base }} <span>Sell: </span
+					<span>Buy: </span>{{ item.gold.total }} <span>Sell: </span
 					>{{ item.gold.sell }}
 				</p>
 			</div>
 
 			<div id="item-into">
 				<div id="into-text">
-					<p>This object can be upgraded to</p>
+					<p v-if="item.into">This object can be upgraded to</p>
+					<p v-else>This object cannot be upgraded</p>
 				</div>
+
 				<div id="into-items">
 					<div
-						v-for="(it, index) in item.into"
+						v-for="(it) in item.into"
 						:key="it"
 						class="into-item"
 					>

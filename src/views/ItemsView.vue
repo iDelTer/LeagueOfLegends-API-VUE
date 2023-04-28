@@ -27,8 +27,6 @@
 			)
             all.value = data
 			items.value = data['data']
-            console.log(items.value)
-            console.log(items.value["1001"])
 		} catch (e) {
 			console.log(e)
 			items.value = null
@@ -36,11 +34,14 @@
 	}
     getData()
 
-    const goToItem = (id, ind) => {
-        let ar = []
-        ar.push(id)
-        console.log(`ar: ${ar}`)
-        router.push(`/item/${id}`)
+    const goToItem = (itemId, ind) => {
+        let allItems = []
+        itemId = String(itemId)
+        let splitted = itemId.split(",")
+        splitted.map(h => {
+            allItems.push(h)
+        })
+        router.push(`/item/${ind}`)
     }
     
 </script>
@@ -62,10 +63,10 @@
 
             <div
             class="item-info"
-            v-for="(item, ind) in items"
-            :key="item"
+            v-for="(item, index) in items"
+            :key="item.name"
             :class="{'invisible': nameFilter.some(el => item.name.includes(el))}"
-            @click="goToItem(Object.keys(items))"
+            @click="goToItem(Object.keys(items), index)"
             >
                 <div class="item-name">
                     {{ item.name }}

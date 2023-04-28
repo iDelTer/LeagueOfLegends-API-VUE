@@ -1,11 +1,9 @@
 <script setup>
 	import { ref, reactive } from "vue"
-	import { useRoute, useRouter } from "vue-router"
-	import { useChampionsStore } from "@/stores/champions"
+	import { useRoute } from "vue-router"
 	import axios from "axios"
 
 	const route = useRoute()
-	const router = useRouter()
 	const champ = route.params.name
 	const champion = ref({})
 
@@ -15,7 +13,6 @@
 				`http://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/champion/${champ}.json`
 			)
 			champion.value = data
-			console.log(data)
 		} catch (e) {
 			console.log(e)
 			champion.value = null
@@ -24,12 +21,7 @@
 
 	getData(champ)
 
-	const back = () => {
-		router.push("/pokemons")
-	}
-
 	const splash = `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ}_0.jpg`
-	const image = `http://ddragon.leagueoflegends.com/cdn/13.8.1/img/champion/${champ}.png`
 
     let spellData = reactive({
         type: 'passive', 
