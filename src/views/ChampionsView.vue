@@ -2,15 +2,15 @@
     import { ref, reactive } from "vue"
 	import { useRouter } from "vue-router"
 	import axios from "axios"
+import { setMapStoreSuffix } from "pinia";
 
 	const router = useRouter()
-	const champions = ref({})
+	let champions = ref({})
     const tags = [
-        'All',
         'Fighter',
         'Tank',
         'Mage',
-        'Assasin',
+        'Assassin',
         'Marksman',
         'Support'
     ]
@@ -31,7 +31,7 @@
 
     const search = reactive({
         value: '',
-        tag: 'All'
+        tag: [...tags]
     })
 
     const updateSearchValue = (event) => {
@@ -52,7 +52,12 @@
     }
 
     const changeTag = (tag) => {
-        search.tag = tag
+        if(tag === 'All'){
+            search.tag = [...tags]
+        }else{
+            search.tag = []
+            search.tag.push(tag)
+        }
     }
 
     const checkTags = (index) => {
@@ -77,50 +82,36 @@
             </div>
             <div id="finder-tags">
 
+                <div
+                :key="'All'"
+                class="tag-box"
+                @click="changeTag('All')"
+                >
+                    <span class="tag-text" :class="{'selected-tag': search.tag.length === 6}">All</span>
+                </div>
+
                 <div 
                 v-for="tag in tags"
                 :key="tag"
                 class="tag-box"
                 @click="changeTag(tag)"
                 >
-                    <span class="tag-text" :class="{'selected-tag': tag === search.tag}">{{ tag }}</span>
+                    <span class="tag-text" :class="{'selected-tag': search.tag.includes(tag) && search.tag.length <= 2}">{{ tag }}</span>
                 </div>
 
             </div>
         </div>
 
-        <div id="champions-content" :class="{'invisible': search.tag === 'All'}">
-            
-            <div
-            class="champion-info"
-            v-for="champ in champions"
-            :key="champ['id']"
-            :class="{'invisible': !champ['name'].toLowerCase().includes(search.value.toLowerCase())}"
-            @click="goToChamp(champ['id'])"
-            >
-            
-                <div class="champion-name">
-                    <p>{{ champ.name }}</p>
-                </div>
-
-                <div class="champion-picture">
-                    <img :src="`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/champion/${champ.image.full}`">
-                </div>
-            
-            </div>
-
-        </div>
-
-        <div id="champions-content" :class="{'invisible': search.tag !== 'All'}">
+        <div id="champions-content">
             
             <div
             class="champion-info"
             v-for="(champ, ind) in champions"
             :key="champ['id']"
-            :class="{'invisible': !champ['name'].includes(search.value) || !champ['tags'].includes(search.value)}"
+            :class="{'invisible': !champ['name'].toLowerCase().includes(search.value.toLowerCase()) || !champ.tags.some(r => search.tag.includes(r))}"
             @click="goToChamp(champ['id'])"
             >
-                
+            
                 <div class="champion-name">
                     <p>{{ champ.name }}</p>
                 </div>
