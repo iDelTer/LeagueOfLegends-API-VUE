@@ -2,10 +2,10 @@
     import { ref, reactive } from "vue"
 	import { useRouter } from "vue-router"
 	import axios from "axios"
-import { setMapStoreSuffix } from "pinia";
 
 	const router = useRouter()
-	let champions = ref({})
+	// let champions = ref({})
+    const champions = ref({})
     const tags = [
         'Fighter',
         'Tank',

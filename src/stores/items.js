@@ -1,9 +1,9 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { Axios } from "axios";
+import axios from "axios";
 
-export const useCounterStore = defineStore('items', () => {
-  const items = ref([])
+export const useItemsStore = defineStore('items', () => {
+  const items = ref({})
   
   const getData = async () => {
     try{
@@ -17,8 +17,7 @@ export const useCounterStore = defineStore('items', () => {
       items.value = null
     }
   }
-
   getData()
 
-  return { items }
+  return { items, getData }
 })
